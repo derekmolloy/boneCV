@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Video for Beaglebone Video Applications - derekmolloy.ie"
+echo "Converting raw file to mpeg4 format"
+
+ffmpeg -f h264 -i video.raw -vcodec copy video.mp4
+
+echo "Finished"
