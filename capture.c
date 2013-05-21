@@ -483,9 +483,9 @@ static void init_device(void)
 
         fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
         if (force_format) {
-                fmt.fmt.pix.width       = 640;
-                fmt.fmt.pix.height      = 480;
-                fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
+                fmt.fmt.pix.width       = 1920;     //changed from 640
+                fmt.fmt.pix.height      = 1080;     //changed from 480
+		fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_H264;    //changed from V4L2_PIX_FMT_YUYV
                 fmt.fmt.pix.field       = V4L2_FIELD_INTERLACED;
 
                 if (-1 == xioctl(fd, VIDIOC_S_FMT, &fmt))
