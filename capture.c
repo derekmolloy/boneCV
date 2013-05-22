@@ -1,4 +1,8 @@
 ﻿/*
+ *  V4L2 video capture example, modified by Derek Molloy for the Logitech C920 camera
+ *  Modifications, added the -F mode for H264 capture and associated help detail
+ *
+ *
  *  V4L2 video capture example
  *
  *  This program can be used and distributed without restrictions.
@@ -44,7 +48,7 @@ static int              fd = -1;
 struct buffer          *buffers;
 static unsigned int     n_buffers;
 static int              out_buf;
-static int              force_format;
+static int              force_format = 0;
 static int              frame_count = 70;
 
 static void errno_exit(const char *s)
@@ -482,11 +486,20 @@ static void init_device(void)
         CLEAR(fmt);
 
         fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+	fprintf(stderr, "Force Format %d\n", force_format);
         if (force_format) {
-                fmt.fmt.pix.width       = 1920;     //changed from 640
-                fmt.fmt.pix.height      = 1080;     //changed from 480
-		fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_H264;    //changed from V4L2_PIX_FMT_YUYV
-                fmt.fmt.pix.field       = V4L2_FIELD_INTERLACED;
+		if (force_format==2){
+             		fmt.fmt.pix.width       = 1920;     
+           		fmt.fmt.pix.height      = 1080;  
+  			fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_H264;
+                	fmt.fmt.pix.field       = V4L2_FIELD_INTERLACED;
+		}
+		else if(force_format==1){
+			fmt.fmt.pix.width	= 640;
+			fmt.fmt.pix.height	= 480;
+			fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
+			fmt.fmt.pix.field	= V4L2_FIELD_INTERLACED;
+		}
 
                 if (-1 == xioctl(fd, VIDIOC_S_FMT, &fmt))
                         errno_exit("VIDIOC_S_FMT");
@@ -566,12 +579,15 @@ static void usage(FILE *fp, int argc, char **argv)
                  "-u | --userp         Use application allocated buffers\n"
                  "-o | --output        Outputs stream to stdout\n"
                  "-f | --format        Force format to 640x480 YUYV\n"
+		 "-F | --formatH264    Force format to 1920x1080 H264\n"
                  "-c | --count         Number of frames to grab [%i]\n"
-                 "",
+                 "\n"
+		 "Example usage: capture -F -o -c 300 > output.raw\n"
+		 "Captures 300 frames of H264 at 1920x1080 - use raw2mpg4 script to convert to mpg4\n",
                  argv[0], dev_name, frame_count);
 }
 
-static const char short_options[] = "d:hmruofc:";
+static const char short_options[] = "d:hmruofFc:";
 
 static const struct option
 long_options[] = {
@@ -582,6 +598,7 @@ long_options[] = {
         { "userp",  no_argument,       NULL, 'u' },
         { "output", no_argument,       NULL, 'o' },
         { "format", no_argument,       NULL, 'f' },
+	{ "formatH264", no_argument,   NULL, 'F' },
         { "count",  required_argument, NULL, 'c' },
         { 0, 0, 0, 0 }
 };
@@ -629,8 +646,12 @@ int main(int argc, char **argv)
                         break;
 
                 case 'f':
-                        force_format++;
+                        force_format=1;
                         break;
+
+		case 'F':
+			force_format=2;
+			break;
 
                 case 'c':
                         errno = 0;
