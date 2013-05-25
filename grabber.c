@@ -11,7 +11,7 @@
    GNU General Public License for more details.
 
    Modified by Derek Molloy (www.derekmolloy.ie)
-   Modified to change resolution details and set paths for the Beaglebone
+   Modified to change resolution details and set paths for the Beaglebone.
  */
 
 #include <stdio.h>
