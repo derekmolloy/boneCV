@@ -1,7 +1,7 @@
 ﻿/*
  *  V4L2 video capture example, modified by Derek Molloy for the Logitech C920 camera
  *  Modifications, added the -F mode for H264 capture and associated help detail
- *
+ *  www.derekmolloy.ie
  *
  *  V4L2 video capture example
  *
