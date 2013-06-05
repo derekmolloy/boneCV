@@ -16,6 +16,6 @@ or the content of the associated video in your research, please cite:
 Molloy, D. [DerekMolloyDCU]. (2013, May, 25). Beaglebone: Video Capture and Image Processing 
 on Embedded Linux using OpenCV [Video file]. Retrieved from http://www.youtube.com/watch?v=8QouvYMfmQo
 
-Please find more information on these videos at: http://www.derekmolloy.ie/
+Please find more information on these videos at: http://www.derekmolloy.ie/  
 
 
