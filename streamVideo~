@@ -1,0 +1,1 @@
+./capture -F -o -c300000|ffmpeg -i - -vcodec copy -f rtp rtp://192.168.1.4:8090/
