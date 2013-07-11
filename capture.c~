@@ -178,7 +178,7 @@ static void mainloop(void)
         if (frame_count == 0) loopIsInfinite = 1; //infinite loop
 	count = frame_count;
 
-        while ((count-- > 0) || loopIsInfinite) {
+        while ((count-- > 0) or loopIsInfinite) {
                 for (;;) {
                         fd_set fds;
                         struct timeval tv;
