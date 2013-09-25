@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         struct timeval                  tv;
         int                             r, fd = -1;
         unsigned int                    i, n_buffers;
-        char                            *dev_name = "/dev/video0";
+        const char                      *dev_name = "/dev/video0";
         char                            out_name[256];
         FILE                            *fout;
         struct buffer                   *buffers;
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
         req.memory = V4L2_MEMORY_MMAP;
         xioctl(fd, VIDIOC_REQBUFS, &req);
 
-        buffers = calloc(req.count, sizeof(*buffers));
+        buffers = (buffer*)calloc(req.count, sizeof(*buffers));
         for (n_buffers = 0; n_buffers < req.count; ++n_buffers) {
                 CLEAR(buf);
 
